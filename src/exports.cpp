@@ -1,7 +1,7 @@
 #include <pyoscar/MainHandler.h>
 #include <pyoscar/OsmKeyValueObjectStore.h>
 
-BOOST_PYTHON_MODULE(pyoscar)
+BOOST_PYTHON_MODULE(_pyoscar)
 {
 	using namespace pyoscar::exporting;
 	export_pyoscar_MainHandler();
