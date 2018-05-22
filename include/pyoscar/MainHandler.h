@@ -14,15 +14,12 @@ public:
 private:
 	liboscar::Static::OsmCompleter m_cmp;
 };
-	
-} //end namespace pyoscar
 
-BOOST_PYTHON_MODULE(pyoscar)
-{
-	using namespace boost::python;
-	class_<pyoscar::MainHandler>("MainHandler")
-		.def("energize", &pyoscar::MainHandler::energize)
-	;
-}
+namespace exporting {
+	
+void export_pyoscar_MainHandler();
+	
+} //namespace exporting
+} //end namespace pyoscar
 
 #endif

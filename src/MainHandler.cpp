@@ -18,6 +18,14 @@ bool MainHandler::energize(std::string path) {
 	return true;
 }
 
+namespace exporting {
 
-	
+void export_pyoscar_MainHandler() {
+	using namespace boost::python;
+	class_<pyoscar::MainHandler>("MainHandler")
+		.def("energize", &pyoscar::MainHandler::energize)
+	;
+}
+
+} //end namespace exporting
 }//end namespace pyoscar

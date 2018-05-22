@@ -18,10 +18,13 @@ include_directories(
 
 set(SOURCES_CPP
 	src/MainHandler.cpp
+	src/OsmKeyValueObjectStore.cpp
+	src/exports.cpp
 )
 
 set(SOURCES_H
 	include/pyoscar/MainHandler.h
+	include/pyoscar/OsmKeyValueObjectStore.h
 )
 
 set(MY_LINK_LIBRARIES
