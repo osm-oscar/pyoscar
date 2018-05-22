@@ -1,5 +1,5 @@
-#ifndef PYOSCAR_MAIN_HANDLER_H
-#define PYOSCAR_MAIN_HANDLER_H
+#pragma once
+
 #include <boost/python.hpp>
 #include <liboscar/StaticOsmCompleter.h>
 
@@ -21,5 +21,3 @@ void export_pyoscar_MainHandler();
 	
 } //namespace exporting
 } //end namespace pyoscar
-
-#endif

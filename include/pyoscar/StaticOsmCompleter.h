@@ -5,7 +5,6 @@
 namespace pyoscar {
 namespace exporting {
 	
-	void export_liboscar_Static_OsmKeyValueObjectStore();
-	void export_liboscar_Static_OsmKeyValueObjectStoreItem();
+	void export_liboscar_Static_OsmCompleter();
 	
 }} //end namespace pyoscar::exporting
