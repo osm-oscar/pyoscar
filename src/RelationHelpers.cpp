@@ -57,7 +57,7 @@ RelationHelpers::intersect(const liboscar::Static::OsmKeyValueObjectStoreItem & 
 		return (rcells / icells).size();
 	}
 	else {
-		
+		return item1.geoShape().intersects(item2.geoShape());
 	}
 	return false;
 }
@@ -67,18 +67,10 @@ namespace exporting {
 void export_pyoscar_RelationHelpers() {
 	using namespace boost::python;
 	using MyClass = pyoscar::RelationHelpers;
-	class_<MyClass>("RelationHelpers")
+	class_<MyClass>("RelationHelpers", init<liboscar::Static::OsmKeyValueObjectStore, sserialize::Static::ItemIndexStore>())
 		.def("is_in", &MyClass::is_in)
+		.def("intersect", &MyClass::intersect)
 	;
 }
 
-void export_liboscar_Static_OsmKeyValueObjectStore() {
-	using namespace boost::python;
-	using MyClass = liboscar::Static::OsmKeyValueObjectStore;
-	class_<MyClass>("OsmKeyValueObjectStore")
-		.def("size", &MyClass::size)
-		.def("at", &MyClass::at)
-	;
-}
-	
 }} //end namespace pyoscar::exporting
