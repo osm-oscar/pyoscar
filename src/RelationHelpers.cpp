@@ -12,8 +12,18 @@ m_idxStore(idxStore)
 RelationHelpers::~RelationHelpers()
 {}
 
+// bool
+// RelationHelpers::is_in(uint32_t itemId1, uint32_t itemId2) const {
+// 	return is_in(m_store.at(itemId1), m_store.at(itemId2));
+// }
+// 
+// bool
+// RelationHelpers::intersect(uint32_t itemId1, uint32_t itemId2) const {
+// 	return intersect(m_store.at(itemId1), m_store.at(itemId2));
+// }
+
 bool
-RelationHelpers::is_in(const liboscar::Static::OsmKeyValueObjectStoreItem & item1, const liboscar::Static::OsmKeyValueObjectStoreItem & item2) {
+RelationHelpers::is_in(const liboscar::Static::OsmKeyValueObjectStoreItem & item1, const liboscar::Static::OsmKeyValueObjectStoreItem & item2) const {
 	const auto & gh = m_store.geoHierarchy();
 	if (item1.isRegion()) {
 		if (item2.isRegion()) {
@@ -37,7 +47,7 @@ RelationHelpers::is_in(const liboscar::Static::OsmKeyValueObjectStoreItem & item
 
 
 bool
-RelationHelpers::intersect(const liboscar::Static::OsmKeyValueObjectStoreItem & item1, const liboscar::Static::OsmKeyValueObjectStoreItem & item2) {
+RelationHelpers::intersect(const liboscar::Static::OsmKeyValueObjectStoreItem & item1, const liboscar::Static::OsmKeyValueObjectStoreItem & item2) const {
 	const auto & gh = m_store.geoHierarchy();
 	if (item1.isRegion() && item2.isRegion()) {
 		auto r1 = gh.regionFromStoreId(item1.id());

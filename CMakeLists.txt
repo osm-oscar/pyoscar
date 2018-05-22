@@ -21,6 +21,8 @@ set(SOURCES_CPP
 	src/OsmKeyValueObjectStore.cpp
 	src/StaticOsmCompleter.cpp
 	src/RelationHelpers.cpp
+	src/ItemIndexStore.cpp
+	src/ItemIndex.cpp
 	src/exports.cpp
 )
 
