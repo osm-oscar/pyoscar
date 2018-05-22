@@ -52,7 +52,7 @@ import pyoscar
 ```
 
 ## Load the data
-```
+```python
 import pyoscar
 import os
 
@@ -62,22 +62,22 @@ cmp.energize()
 ```
 
 ## Issuing a query
-```
+```python
 result = cmp.query("@highway in Stuttgart")
 ```
 
 ## Getting all cells
-```
+```python
 cells = result.cells()
 ```
 
 ## Getting all item ids
-```
+```python
 items = result.items()
 ```
 
 ## Get the real item
-```
+```python
 store = cmp.store()
 for itemid in items:
 	item = store.at(itemid)
