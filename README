@@ -1,13 +1,13 @@
 # Setup
 ## Cloning
-´´´Bash
+```Bash
 git clone --recursive https://github.com/dbahrdt/pyoscar
-```
+´´´
 
 ## Updating
-´´´Bash
+```Bash
 git --rebase pull && git submodule update && git submodule foreach --recursive git submodule update
-```
+´´´
 
 ## Pre-requisites
  - Python 3
@@ -19,12 +19,12 @@ git --rebase pull && git submodule update && git submodule foreach --recursive g
 
 
 ## building
-´´´Bash
+```Bash
 mkdir build
 cd build
 cmake ../
 make
-```
+´´´
 
 # Sample data
 
@@ -66,19 +66,19 @@ result = cmp.query("@highway in Stuttgart")
 ´´´
 
 ## Getting all cells
-´´´
-cells = result.cells()
 ```
+cells = result.cells()
+´´´
 
 ## Getting all item ids
-´´´
+```
 items = result.items()
 ´´´
 
 ## Get the real item
-´´´
+```
 store = cmp.store()
 for itemid in items:
 	item = store.at(itemid)
 	#do something?
-```
+´´´
