@@ -1,7 +1,5 @@
 #pragma once
 
-#include <boost/python.hpp>
-
 namespace pyoscar {
 namespace exporting {
 	

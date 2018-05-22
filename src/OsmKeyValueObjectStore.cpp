@@ -2,6 +2,8 @@
 
 #include <liboscar/OsmKeyValueObjectStore.h>
 
+#include <boost/python.hpp>
+
 namespace pyoscar {
 namespace exporting {
 
