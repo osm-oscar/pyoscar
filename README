@@ -1,4 +1,30 @@
-Clone with git clone --recursive
+# Setup
+## Cloning
+´´´Bash
+git clone --recursive https://github.com/dbahrdt/pyoscar
+```
+
+## Updating
+´´´Bash
+git --rebase pull && git submodule update && git submodule foreach --recursive git submodule update
+```
+
+## Pre-requisites
+ - Python 3
+ - Boost-Python
+ - zlib-dev
+ - CGAL
+ - cryptopp
+ - icu
+
+
+## building
+´´´Bash
+mkdir build
+cd build
+cmake ../
+make
+```
 
 # Sample data
 
