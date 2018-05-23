@@ -2,6 +2,7 @@
 
 #include <boost/python.hpp>
 #include <liboscar/StaticOsmCompleter.h>
+#include <pyoscar/RelationHelpers.h>
 
 namespace pyoscar {
 	
@@ -11,6 +12,8 @@ public:
 	~MainHandler();
 public:
 	bool energize(std::string path);
+	liboscar::Static::OsmCompleter & engine();
+	RelationHelpers relationHelpers();
 private:
 	liboscar::Static::OsmCompleter m_cmp;
 };

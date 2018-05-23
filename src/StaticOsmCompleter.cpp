@@ -17,7 +17,7 @@ void export_liboscar_Static_OsmCompleter() {
 	
 	
 	class_<MyClass>("OsmCompleter")
-		.def("setAllFilesFromPrefix", &MyClass::setAllFilesFromPrefix)
+		.def("setDataPath", &MyClass::setAllFilesFromPrefix)
 		.def("energize", &MyClass::energize, liboscar_Static_OsmCompleter_energize_overloads())
 		.def("store", &MyClass::store, return_value_policy<copy_const_reference>())
 		.def("idxStore", &MyClass::indexStore, return_value_policy<copy_const_reference>())
