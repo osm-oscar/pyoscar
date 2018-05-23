@@ -23,6 +23,7 @@ set(SOURCES_CPP
 	src/RelationHelpers.cpp
 	src/ItemIndexStore.cpp
 	src/ItemIndex.cpp
+	src/CellQueryResult.cpp
 	src/exports.cpp
 )
 
@@ -30,6 +31,9 @@ set(SOURCES_H
 	include/pyoscar/MainHandler.h
 	include/pyoscar/OsmKeyValueObjectStore.h
 	include/pyoscar/RelationHelpers.h
+	include/pyoscar/ItemIndexStore.h
+	include/pyoscar/ItemIndex.h
+	include/pyoscar/CellQueryResult.h
 	include/pyoscar/StaticOsmCompleter.h
 )
 

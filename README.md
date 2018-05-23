@@ -73,7 +73,7 @@ cells = result.cells()
 
 ## Getting all item ids
 ```python
-items = result.items()
+items = cells.items()
 ```
 
 ## Get the real item

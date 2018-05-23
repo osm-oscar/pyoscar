@@ -14,6 +14,18 @@ void export_sserialize_ItemIndex() {
 		.def("size", &MyClass::size)
 		.def("at", &MyClass::at)
 		.def("__iter__", iterator<MyClass>())
+		.def(self + other<MyClass>())
+		.def(self / other<MyClass>())
+		.def(self - other<MyClass>())
+		.def(self ^ other<MyClass>())
+		.def(other<MyClass>() + self)
+		.def(other<MyClass>() / self)
+		.def(other<MyClass>() - self)
+		.def(other<MyClass>() ^ self)
+		.def(self += other<MyClass>())
+		.def(self /= other<MyClass>())
+		.def(self -= other<MyClass>())
+		.def(self ^= other<MyClass>())
 	;
 }
 
