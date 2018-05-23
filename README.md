@@ -40,12 +40,14 @@ http://data.oscar-web.de/archive/de/
 
 place them in a single folder:
 
+```Bash
 export OSCAR_DATA_PATH=your_path
 
 cd ${OSCAR_DATA_PATH}
 wget http://data.oscar-web.de/archive/de/index
 wget http://data.oscar-web.de/archive/de/kvstore
 wget http://data.oscar-web.de/archive/de/textsearch
+```
 
 # Using pyoscar
 ## Load the package:
@@ -58,14 +60,13 @@ import pyoscar
 import pyoscar
 import os
 
-cmp = pyoscar.OsmCompleter()
-cmp.setAllFilesFromPrefix(os.environ['OSCAR_DATA_PATH'])
-cmp.energize()
+hdl = pyoscar.MainHandler()
+hdl.energize(os.environ['OSCAR_DATA_PATH'])
 ```
-
 ## Issuing a query
 ```python
-result = cmp.query("@highway in Stuttgart")
+engine = hdl.engine()
+result = engine.query("@highway in Stuttgart")
 ```
 
 ## Getting all cells
