@@ -83,3 +83,10 @@ for itemid in items:
 	item = store.at(itemid)
 	#do something?
 ```
+
+# Semantics
+## The Graph and the Store
+
+OSCAR uses two ids to reference items and regions.
+The store is indexed using an `itemId` whereas the Inclusion-Dag/Graph is indexed using a `graphId`.
+Conversion between the two is only necessary for regions and is possible by using the functions `pyoscar.GeoHierarchy.itemId2GraphId` and `pyoscar.GeoHierarchy.graphId2StoreId` respectivley.

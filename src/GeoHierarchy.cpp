@@ -70,7 +70,8 @@ void export_sserialize_Static_spatial_GeoHierarchy() {
 		.def("region", &MyClass::region)
 		.def("cell", &MyClass::cell)
 		.def("regionFromItemId", &MyClass::regionFromStoreId)
-		.def("graphId2ItemId", &MyClass::storeIdToGhId)
+		.def("itemId2GraphId", &MyClass::storeIdToGhId)
+		.def("graphId2ItemId", &MyClass::ghIdToStoreId)
 	;
 }
 
