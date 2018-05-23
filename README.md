@@ -17,6 +17,8 @@ git --rebase pull && git submodule update && git submodule foreach --recursive g
  - CGAL
  - cryptopp
  - icu
+ - ragel
+ - cppunit
 
 
 ## building
