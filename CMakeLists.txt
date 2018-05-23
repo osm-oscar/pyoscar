@@ -27,6 +27,7 @@ set(SOURCES_CPP
 	src/ItemIndex.cpp
 	src/CellQueryResult.cpp
 	src/GeoHierarchy.cpp
+	src/refcounting.cpp
 	src/exports.cpp
 )
 
@@ -39,6 +40,7 @@ set(SOURCES_H
 	include/pyoscar/CellQueryResult.h
 	include/pyoscar/GeoHierarchy.h
 	include/pyoscar/StaticOsmCompleter.h
+	include/pyoscar/refcounting.h
 )
 
 set(MY_LINK_LIBRARIES
