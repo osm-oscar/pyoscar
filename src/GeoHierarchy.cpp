@@ -9,12 +9,20 @@ namespace exporting {
 void export_sserialize_Static_spatial_GeoHierarchy_SubSetNode() {
 	using namespace boost::python;
 	using MyClass = sserialize::Static::spatial::detail::SubSet::Node;
+	
+	typedef MyClass::NodePtr const & (MyClass:: *AtMemFn)(uint32_t) const;
+	typedef uint32_t (MyClass:: *MaxItemsSizeMemFn)() const;
+	typedef MyClass::NodePtr const & (MyClass:: *AtMemFn)(uint32_t) const;
+	
+	AtMemFn atMemFn = &MyClass::at;
+	MaxItemsSizeMemFn maxItemsSizeMemFn = &MyClass::maxItemsSize;
+	
 	class_<MyClass, bases<>, MyClass::NodePtr, boost::noncopyable>("GeoHierarchySubSetNode", init<uint32_t, uint32_t>())
 		.def("graphId", &MyClass::ghId)
 		.def("size", &MyClass::size)
-// 		.def("at", &MyClass::at)
-// 		.def("maxItemsSize", &MyClass::maxItemsSize)
-// 		.def("__iter__", iterator<MyClass>())
+		.def("at", atMemFn, return_value_policy<return_by_value>())
+		.def("maxItemsSize", maxItemsSizeMemFn)
+		.def("__iter__", iterator<MyClass>())
 	;
 // 	register_ptr_to_python< MyClass::NodePtr >();
 }
@@ -43,6 +51,8 @@ void export_sserialize_Static_spatial_GeoHierarchy_Region() {
 	using namespace boost::python;
 	using MyClass = sserialize::Static::spatial::detail::Region;
 	class_<MyClass>("GeoHierarchyRegion")
+		.def("graphId", &MyClass::ghId)
+		.def("itemId", &MyClass::storeId)
 		.def("itemsCount", &MyClass::itemsCount)
 		.def("childrenCount", &MyClass::childrenSize)
 		.def("ancestorCount", &MyClass::parentsSize)
@@ -60,7 +70,7 @@ void export_sserialize_Static_spatial_GeoHierarchy() {
 		.def("region", &MyClass::region)
 		.def("cell", &MyClass::cell)
 		.def("regionFromItemId", &MyClass::regionFromStoreId)
-		.def("regionId2ItemId", &MyClass::storeIdToGhId)
+		.def("graphId2ItemId", &MyClass::storeIdToGhId)
 	;
 }
 
