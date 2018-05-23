@@ -6,6 +6,16 @@
 
 namespace pyoscar {
 namespace exporting {
+	
+namespace { //protecting namespace
+	
+std::string print_item(const liboscar::Static::OsmKeyValueObjectStoreItem & item) {
+	std::stringstream ss;
+	item.print(ss, false);
+	return ss.str();
+}
+
+}//end protecting namespace
 
 void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
 	using namespace boost::python;
@@ -15,6 +25,7 @@ void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
 		.def("isRegion", &MyClass::isRegion)
 		.def("osmId", &MyClass::osmId)
 		.def("dump", &MyClass::dump)
+		.def("__str__", &print_item)
 	;
 }
 
