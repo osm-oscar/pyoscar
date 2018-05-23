@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.9)
 project(pyoscar)
 
-set(Python_ADDITIONAL_VERSIONS 3.4 3.5 3.6 3.7)
 
-find_package(PythonInterp 3 REQUIRED)
-find_package(PythonLibs 3 REQUIRED)
+#todo make this working with other python versions
+set(Python_ADDITIONAL_VERSIONS 3.5)
+
+find_package(PythonInterp 3.5 REQUIRED)
+find_package(PythonLibs 3.5 REQUIRED)
 find_package(Boost COMPONENTS python-py35 REQUIRED)
 
 add_subdirectory(vendor/liboscar liboscar)
@@ -24,6 +26,7 @@ set(SOURCES_CPP
 	src/ItemIndexStore.cpp
 	src/ItemIndex.cpp
 	src/CellQueryResult.cpp
+	src/GeoHierarchy.cpp
 	src/exports.cpp
 )
 
@@ -34,6 +37,7 @@ set(SOURCES_H
 	include/pyoscar/ItemIndexStore.h
 	include/pyoscar/ItemIndex.h
 	include/pyoscar/CellQueryResult.h
+	include/pyoscar/GeoHierarchy.h
 	include/pyoscar/StaticOsmCompleter.h
 )
 
