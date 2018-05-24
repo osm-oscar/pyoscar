@@ -17,7 +17,6 @@ public:
 private:
 	liboscar::Static::OsmKeyValueObjectStore m_store;
 	sserialize::Static::ItemIndexStore m_idxStore;
-	
 };
 	
 namespace exporting {

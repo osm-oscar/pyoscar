@@ -11,6 +11,7 @@ BOOST_PYTHON_MODULE(_pyoscar)
 {
 	using namespace pyoscar::exporting;
 	export_sserialize_CellQueryResult();
+	export_sserialize_Static_spatial_GeoHierarchy_SubSetNode();
 	export_sserialize_Static_spatial_GeoHierarchy_Cell();
 	export_sserialize_Static_spatial_GeoHierarchy_Region();
 	export_sserialize_Static_spatial_GeoHierarchy_SubSet();

@@ -61,3 +61,7 @@ for i in range(0, stuttgart_filtered.size()):
 			elif (relhelp.intersect(i, j)):
 				print("Intersecting items: " + str(i) + " and " + str(j))
 
+
+q = engine.query(""" #"Stuttgart" """)
+print("""Graph of the query #"Stuttgart" """)
+q.graph().visit(pyoscar.GeoHierarchySubSetNodeVisitor(lambda x : print(x)))
