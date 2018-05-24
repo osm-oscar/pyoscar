@@ -73,11 +73,11 @@ void export_sserialize_Static_spatial_GeoHierarchy_SubSetNode() {
 	
 	class_<MyClass, bases<>, MyClass::NodePtr, boost::noncopyable>("GeoHierarchySubSetNode", init<uint32_t, uint32_t>())
 		.def("graphId", &MyClass::ghId)
-		.def("size", &MyClass::size)
-		.def("at", atMemFn, return_value_policy<return_by_value>())
-		.def("maxItemsSize", maxItemsSizeMemFn)
+		.def("size", &MyClass::size, "Number of children")
+		.def("at", atMemFn, return_value_policy<return_by_value>(), "Child at position i")
+		.def("maxItemsSize", maxItemsSizeMemFn, "Maximum number of items in this region")
 		.def("__iter__", iterator<MyClass>())
-		.def("visit", &sserialize_Static_spatial_GeoHierarchy_SubSetNodeVisit)
+		.def("visit", &sserialize_Static_spatial_GeoHierarchy_SubSetNodeVisit, "Visit every descendant, possibly multiple times")
 		.def("__str__", &sserialize_Static_spatial_GeoHierarchy_SubSetNodeToString)
 	;
 // 	register_ptr_to_python< MyClass::NodePtr >();
@@ -87,9 +87,9 @@ void export_sserialize_Static_spatial_GeoHierarchy_SubSet() {
 	using namespace boost::python;
 	using MyClass = sserialize::Static::spatial::detail::SubSet;
 	class_<MyClass>("GeoHierarchySubSet")
-		.def("cells", &MyClass::cqr, return_value_policy<copy_const_reference>())
-		.def("graph", &MyClass::root, return_value_policy<copy_const_reference>())
-		.def("items", &MyClass::items)
+		.def("cells", &MyClass::cqr, return_value_policy<copy_const_reference>(), "Cells of the query")
+		.def("graph", &MyClass::root, return_value_policy<copy_const_reference>(), "The Inclusion-Dag of the query")
+		.def("items", &MyClass::items, "All items of the query")
 	;
 }
 
@@ -97,9 +97,9 @@ void export_sserialize_Static_spatial_GeoHierarchy_Cell() {
 	using namespace boost::python;
 	using MyClass = sserialize::Static::spatial::detail::Cell;
 	class_<MyClass>("GeoHierarchyCell")
-		.def("itemCount", &MyClass::itemCount)
-		.def("ancestorCount", &MyClass::parentsSize)
-		.def("ancestorId", &MyClass::parent)
+		.def("itemCount", &MyClass::itemCount, "Number of items in this cell in the database")
+		.def("ancestorCount", &MyClass::parentsSize, "Number of ancestors of this cell in the database")
+		.def("ancestorId", &MyClass::parent, "Id of ancestor at position i")
 	;
 }
 
@@ -109,11 +109,11 @@ void export_sserialize_Static_spatial_GeoHierarchy_Region() {
 	class_<MyClass>("GeoHierarchyRegion")
 		.def("graphId", &MyClass::ghId)
 		.def("itemId", &MyClass::storeId)
-		.def("itemsCount", &MyClass::itemsCount)
-		.def("childrenCount", &MyClass::childrenSize)
-		.def("ancestorCount", &MyClass::parentsSize)
-		.def("ancestorId", &MyClass::parent)
-		.def("childId", &MyClass::child)
+		.def("itemsCount", &MyClass::itemsCount, "Number of items covered by this region in the database")
+		.def("childrenCount", &MyClass::childrenSize, "Number of children of this region in the database")
+		.def("parentCount", &MyClass::parentsSize, "Number of parents of this region in the database")
+		.def("parentId", &MyClass::parent, "Id of parent at position i")
+		.def("childId", &MyClass::child, "Id of child at position i")
 	;
 }
 
@@ -123,8 +123,8 @@ void export_sserialize_Static_spatial_GeoHierarchy() {
 	class_<MyClass>("GeoHierarchy")
 		.def("numberOfRegions", &MyClass::regionSize)
 		.def("numberOfCells", &MyClass::cellSize)
-		.def("region", &MyClass::region)
-		.def("cell", &MyClass::cell)
+		.def("region", &MyClass::region, "Region with id=i")
+		.def("cell", &MyClass::cell, "Cell with id=i")
 		.def("regionFromItemId", &MyClass::regionFromStoreId)
 		.def("itemId2GraphId", &MyClass::storeIdToGhId)
 		.def("graphId2ItemId", &MyClass::ghIdToStoreId)

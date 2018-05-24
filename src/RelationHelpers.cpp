@@ -114,11 +114,11 @@ void export_pyoscar_RelationHelpers() {
 	class_<RelationHelpersIntersectingItemsVisitor, boost::noncopyable >("_RelationHelpersIntersectingItemsVisitor", init<PyObject*>() );
 	
 	class_<MyClass>("RelationHelpers", init<liboscar::Static::OsmKeyValueObjectStore, sserialize::Static::ItemIndexStore>())
-		.def("is_in", is_in_ids)
-		.def("intersect", intersect_ids)
-		.def("is_in", is_in_items)
-		.def("intersect", intersect_items)
-		.def("intersect", &RelationHelpers_intersecting_items)
+		.def("is_in", is_in_ids, "true iff first covers second")
+		.def("intersect", intersect_ids, "true if first and second intersect")
+		.def("is_in", is_in_items, "true iff first covers second")
+		.def("intersect", intersect_items, "true if first and second intersect")
+		.def("intersect", &RelationHelpers_intersecting_items, "visit all items intersecting each other")
 	;
 }
 

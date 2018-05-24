@@ -42,12 +42,12 @@ void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
 		.def("osmId", &MyClass::osmId)
 		.def("dump", &MyClass::dump)
 		.def("__str__", &print_item)
-		.def("size", &MyClass::size)
-		.def("key", &MyClass::key)
-		.def("value", valueByPos)
-		.def("value", valueByKey)
-		.def("findKey", &findKey_item)
-		.def("findValue", &findValue_item)
+		.def("size", &MyClass::size, "Number of tags")
+		.def("key", &MyClass::key, "Return key at position i")
+		.def("value", valueByPos, "Return value at position i")
+		.def("value", valueByKey, "Return value by key, empty if not present")
+		.def("findKey", &findKey_item, "Return index of key, 0xFFFFFFFF if not present")
+		.def("findValue", &findValue_item, "Return index of value, 0xFFFFFFFF if not present")
 	;
 }
 

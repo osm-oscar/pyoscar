@@ -13,11 +13,11 @@ void export_sserialize_CellQueryResult() {
 	using namespace boost::python;
 	using MyClass = sserialize::CellQueryResult;
 	class_<MyClass>("CellQueryResult")
-		.def("size", &MyClass::cellCount)
-		.def("cellId", &MyClass::cellId)
-		.def("itemCount", &MyClass::idxSize)
-		.def("cellItems", &MyClass::items)
-		.def("allToFull", &MyClass::allToFull)
+		.def("size", &MyClass::cellCount, "Number of cells")
+		.def("cellId", &MyClass::cellId, "Id of the cell at position i")
+		.def("itemCount", &MyClass::idxSize, "Number of items in cell at position i")
+		.def("cellItems", &MyClass::items, "Items of cell at position i")
+		.def("allToFull", &MyClass::allToFull, "Turn all cells into full match cells")
 		.def("items", &MyClass::flaten, sserialize_CellQueryResult_flaten_overloads())
 		.def(self + other<MyClass>())
 		.def(self / other<MyClass>())

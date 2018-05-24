@@ -31,9 +31,9 @@ namespace exporting {
 void export_pyoscar_MainHandler() {
 	using namespace boost::python;
 	class_<pyoscar::MainHandler>("MainHandler")
-		.def("energize", &pyoscar::MainHandler::energize)
-		.def("engine", &pyoscar::MainHandler::engine, return_internal_reference<>())
-		.def("relationHelpers", &pyoscar::MainHandler::relationHelpers)
+		.def("energize", &pyoscar::MainHandler::energize, "Load data store at path p")
+		.def("engine", &pyoscar::MainHandler::engine, return_internal_reference<>(), "Get query engine")
+		.def("relationHelpers", &pyoscar::MainHandler::relationHelpers, "Get relation helpers")
 	;
 }
 
