@@ -35,6 +35,7 @@ void export_liboscar_Static_OsmKeyValueObjectStore() {
 	class_<MyClass>("OsmKeyValueObjectStore")
 		.def("size", &MyClass::size)
 		.def("at", &MyClass::at)
+		.def("graph", &MyClass::geoHierarchy, return_value_policy<copy_const_reference>())
 	;
 }
 	
