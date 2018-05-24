@@ -73,3 +73,5 @@ relhelp.intersect(
 q = engine.query(""" #"Stuttgart" """)
 print("""Graph of the query #"Stuttgart" """)
 q.graph().visit(pyoscar.GeoHierarchySubSetNodeVisitor(lambda x : print(x)))
+graph = store.graph()
+q.graph().visit(pyoscar.GeoHierarchySubSetNodeVisitor(lambda x : print(graph.region(x.graphId() ).itemId())))
