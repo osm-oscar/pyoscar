@@ -15,17 +15,39 @@ std::string print_item(const liboscar::Static::OsmKeyValueObjectStoreItem & item
 	return ss.str();
 }
 
+uint32_t findKey_item(const liboscar::Static::OsmKeyValueObjectStoreItem & item, const std::string & key) {
+	return item.findKey(key);
+}
+
+uint32_t findValue_item(const liboscar::Static::OsmKeyValueObjectStoreItem & item, const std::string & value) {
+	return item.findValue(value);
+}
+
+
 }//end protecting namespace
 
 void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
 	using namespace boost::python;
 	using MyClass = liboscar::Static::OsmKeyValueObjectStoreItem;
+	
+	typedef std::string (MyClass:: *ValueByPos)(uint32_t) const;
+	typedef std::string (MyClass:: *ValueByKey)(const std::string&) const;
+	
+	ValueByPos valueByPos = &MyClass::value;
+	ValueByKey valueByKey = &MyClass::value; 
+	
 	class_<MyClass>("OsmKeyValueObjectStoreItem")
 		.def("id", &MyClass::id)
 		.def("isRegion", &MyClass::isRegion)
 		.def("osmId", &MyClass::osmId)
 		.def("dump", &MyClass::dump)
 		.def("__str__", &print_item)
+		.def("size", &MyClass::size)
+		.def("key", &MyClass::key)
+		.def("value", valueByPos)
+		.def("value", valueByKey)
+		.def("findKey", &findKey_item)
+		.def("findValue", &findValue_item)
 	;
 }
 
