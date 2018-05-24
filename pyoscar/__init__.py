@@ -9,3 +9,11 @@ class GeoHierarchySubSetNodeVisitor(_pyoscar._GeoHierarchySubSetNodeVisitor):
 
 	def visit(self, x):
 		self.m_visitor(x)
+
+class RelationHelpersIntersectingItemsVisitor(_pyoscar._RelationHelpersIntersectingItemsVisitor):
+	def __init__(self, visitor):
+		_pyoscar._RelationHelpersIntersectingItemsVisitor.__init__(self, self)
+		self.m_visitor = visitor
+
+	def visit(self, x, y):
+		self.m_visitor(x, y)

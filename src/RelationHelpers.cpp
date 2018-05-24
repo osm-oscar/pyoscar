@@ -73,25 +73,52 @@ RelationHelpers::intersect(const liboscar::Static::OsmKeyValueObjectStoreItem & 
 }
 
 namespace exporting {
+	
+class RelationHelpersIntersectingItemsVisitor {
+public:
+public:
+	RelationHelpersIntersectingItemsVisitor(PyObject* self) :
+	self(self)
+	{}
+	bool operator()(uint32_t first, uint32_t second) {
+		boost::python::call_method<void>(self, "visit", first, second);
+	}
+private:
+    PyObject* self;
+};
+
+namespace {
+void RelationHelpers_intersecting_items(
+	const RelationHelpers & self,
+	const sserialize::CellQueryResult & first,
+	const sserialize::CellQueryResult & second,
+	RelationHelpersIntersectingItemsVisitor visitor)
+{
+	self.intersecting_items(first, second, visitor);
+}
+}
 
 void export_pyoscar_RelationHelpers() {
 	using namespace boost::python;
 	using MyClass = pyoscar::RelationHelpers;
 	
-	typedef bool (MyClass:: *binary_predicate_ids)(uint32_t, uint32_t) const;
-	typedef bool (MyClass:: *binary_predicate_items)(const liboscar::Static::OsmKeyValueObjectStoreItem &, const liboscar::Static::OsmKeyValueObjectStoreItem &) const;
+	typedef bool (MyClass:: *Binary_predicate_ids)(uint32_t, uint32_t) const;
+	typedef bool (MyClass:: *Binary_predicate_items)(const liboscar::Static::OsmKeyValueObjectStoreItem &, const liboscar::Static::OsmKeyValueObjectStoreItem &) const;
 	
-	binary_predicate_ids is_in_ids = &MyClass::is_in;
-	binary_predicate_ids intersect_ids = &MyClass::intersect;
+	Binary_predicate_ids is_in_ids = &MyClass::is_in;
+	Binary_predicate_ids intersect_ids = &MyClass::intersect;
 	
-	binary_predicate_items is_in_items = &MyClass::is_in;
-	binary_predicate_items intersect_items = &MyClass::intersect;
+	Binary_predicate_items is_in_items = &MyClass::is_in;
+	Binary_predicate_items intersect_items = &MyClass::intersect;
+	
+	class_<RelationHelpersIntersectingItemsVisitor, boost::noncopyable >("_RelationHelpersIntersectingItemsVisitor", init<PyObject*>() );
 	
 	class_<MyClass>("RelationHelpers", init<liboscar::Static::OsmKeyValueObjectStore, sserialize::Static::ItemIndexStore>())
 		.def("is_in", is_in_ids)
 		.def("intersect", intersect_ids)
 		.def("is_in", is_in_items)
 		.def("intersect", intersect_items)
+		.def("intersect", &RelationHelpers_intersecting_items)
 	;
 }
 

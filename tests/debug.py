@@ -61,6 +61,14 @@ for i in range(0, stuttgart_filtered.size()):
 			elif (relhelp.intersect(i, j)):
 				print("Intersecting items: " + str(i) + " and " + str(j))
 
+#the same thing, but this time in native code
+print("The same in native code:")
+relhelp.intersect(
+	stuttgart_filtered,
+	neugereut_filtered,
+	pyoscar.RelationHelpersIntersectingItemsVisitor(
+		lambda x, y : print(str(x) + ":" + str(y))
+	))
 
 q = engine.query(""" #"Stuttgart" """)
 print("""Graph of the query #"Stuttgart" """)
