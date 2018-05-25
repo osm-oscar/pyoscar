@@ -92,9 +92,9 @@ plochingen = engine.query(""" #"Plochingen" """)
 # lets find our region
 idOfPlochingen = 0
 
-class FindPlochingenVisitor(pyoscar._pyoscar._GeoHierarchySubSetNodeVisitor):
+class FindPlochingenVisitor(pyoscar.GeoHierarchySubSetNodeVisitorBase):
 	def __init__(self):
-		pyoscar._pyoscar._GeoHierarchySubSetNodeVisitor.__init__(self, self)
+		pyoscar.GeoHierarchySubSetNodeVisitorBase.__init__(self, self)
 		self.idOfPlochingen = -1
 	def visit(self, node):
 		itemId = graph.graphId2ItemId(node.graphId())

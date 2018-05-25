@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 from ._pyoscar import *
+from ._pyoscar import _GeoHierarchySubSetNodeVisitor as GeoHierarchySubSetNodeVisitorBase
+from ._pyoscar import _RelationHelpersIntersectingItemsVisitor as RelationHelpersIntersectingItemsVisitorBase
 
 ### Use this to visit all descendants of a node of GeoHierarchySubSetNode
-class GeoHierarchySubSetNodeVisitor(_pyoscar._GeoHierarchySubSetNodeVisitor):
+class GeoHierarchySubSetNodeVisitor(GeoHierarchySubSetNodeVisitorBase):
 	def __init__(self, visitor):
-		_pyoscar._GeoHierarchySubSetNodeVisitor.__init__(self, self)
+		GeoHierarchySubSetNodeVisitorBase.__init__(self, self)
 		if (not visitor is None):
 			self.m_visitor = visitor
 
@@ -12,9 +14,9 @@ class GeoHierarchySubSetNodeVisitor(_pyoscar._GeoHierarchySubSetNodeVisitor):
 		if (not self.m_visitor is None):
 			self.m_visitor(x)
 
-class RelationHelpersIntersectingItemsVisitor(_pyoscar._RelationHelpersIntersectingItemsVisitor):
+class RelationHelpersIntersectingItemsVisitor(RelationHelpersIntersectingItemsVisitorBase):
 	def __init__(self, visitor):
-		_pyoscar._RelationHelpersIntersectingItemsVisitor.__init__(self, self)
+		RelationHelpersIntersectingItemsVisitorBase.__init__(self, self)
 		self.m_visitor = visitor
 
 	def visit(self, x, y):
