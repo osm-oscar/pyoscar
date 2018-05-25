@@ -100,6 +100,7 @@ void export_sserialize_Static_spatial_GeoHierarchy_Cell() {
 		.def("itemCount", &MyClass::itemCount, "Number of items in this cell in the database")
 		.def("ancestorCount", &MyClass::parentsSize, "Number of ancestors of this cell in the database")
 		.def("ancestorId", &MyClass::parent, "Id of ancestor at position i")
+		.def("bbox", &MyClass::boundary)
 	;
 }
 
@@ -114,6 +115,7 @@ void export_sserialize_Static_spatial_GeoHierarchy_Region() {
 		.def("parentCount", &MyClass::parentsSize, "Number of parents of this region in the database")
 		.def("parentId", &MyClass::parent, "Id of parent at position i")
 		.def("childId", &MyClass::child, "Id of child at position i")
+		.def("bbox", &MyClass::boundary)
 	;
 }
 

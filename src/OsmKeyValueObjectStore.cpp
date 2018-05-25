@@ -23,6 +23,9 @@ uint32_t findValue_item(const liboscar::Static::OsmKeyValueObjectStoreItem & ite
 	return item.findValue(value);
 }
 
+sserialize::spatial::GeoRect boundary_item(const liboscar::Static::OsmKeyValueObjectStoreItem & item) {
+	return item.geoShape().boundary();
+}
 
 }//end protecting namespace
 
@@ -42,6 +45,7 @@ void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
 		.def("osmId", &MyClass::osmId)
 		.def("dump", &MyClass::dump)
 		.def("__str__", &print_item)
+		.def("bbox", &boundary_item)
 		.def("size", &MyClass::size, "Number of tags")
 		.def("key", &MyClass::key, "Return key at position i")
 		.def("value", valueByPos, "Return value at position i")

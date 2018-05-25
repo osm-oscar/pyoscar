@@ -4,8 +4,14 @@
 namespace pyoscar {
 namespace exporting {
 	
+namespace {
 	
-BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(liboscar_Static_OsmCompleter_energize_overloads, energize, 0, 1);
+void liboscar_Static_OsmCompleter_energize(liboscar::Static::OsmCompleter & x) {
+	x.energize(sserialize::spatial::GeoHierarchySubGraph::T_PASS_THROUGH);
+}
+
+} //protecting namespace
+	
 	
 void export_liboscar_Static_OsmCompleter() {
 	using namespace boost::python;
@@ -15,10 +21,9 @@ void export_liboscar_Static_OsmCompleter() {
 	
 	ClusteredCompleteMemFn clusteredCompleteMemFn = &MyClass::clusteredComplete;
 	
-	
 	class_<MyClass>("OsmCompleter")
 		.def("setDataPath", &MyClass::setAllFilesFromPrefix, "Set the path to the data")
-		.def("energize", &MyClass::energize, liboscar_Static_OsmCompleter_energize_overloads())
+		.def("energize", &liboscar_Static_OsmCompleter_energize, "Load the data")
 		.def("store", &MyClass::store, return_value_policy<copy_const_reference>(), "data base")
 		.def("idxStore", &MyClass::indexStore, return_value_policy<copy_const_reference>(), "Index data base")
 		.def("query", clusteredCompleteMemFn, "Issue a query") 
