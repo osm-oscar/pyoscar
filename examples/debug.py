@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 
 import pyoscar
+import argparse
+
+cmdLineParser = argparse.ArgumentParser(description="Does some example queries")
+cmdLineParser.add_argument('-f', help='path to oscar data', dest='f', nargs=1, type=str, required=True)
+
+parsedArgs = cmdLineParser.parse_args()
 
 hdl = pyoscar.MainHandler()
-hdl.energize("/home/daniel/documents/coding/oscar/builds/stretch/ultra/oscar-create/stgt_global")
+hdl.energize(parsedArgs.f[0])
 engine = hdl.engine()
 result = engine.query("jakob böhme weg stuttgart @highway")
 cells = result.cells()
@@ -32,8 +38,8 @@ for i in neckar:
 	for j in neckar:
 		if (relhelp.intersect(i, j) and i != j):
 			print("The following parts of the Neckar intersect:")
-			print(store.at(i))
-			print(store.at(j))
+			print(str(store.at(i)))
+			print(str(store.at(j)))
 
 
 # We can do this faster by only checking items that are in the same cells:
@@ -63,7 +69,7 @@ for i in range(0, stuttgart_filtered.size()):
 
 #the same thing, but this time in native code
 print("The same in native code:")
-relhelp.intersect(
+relhelp.intersecting_items(
 	stuttgart_filtered,
 	neugereut_filtered,
 	pyoscar.RelationHelpersIntersectingItemsVisitor(
@@ -75,3 +81,46 @@ print("""Graph of the query #"Stuttgart" """)
 q.graph().visit(pyoscar.GeoHierarchySubSetNodeVisitor(lambda x : print(x)))
 graph = store.graph()
 q.graph().visit(pyoscar.GeoHierarchySubSetNodeVisitor(lambda x : print(graph.region(x.graphId() ).itemId())))
+
+#let try to check if plochingen is at the confluence of neckar and fils
+
+print("Try to check if neckar and fils intersect in Plochingen")
+neckar = engine.query("!Neckar @waterway:river")
+fils = engine.query("!Fils @waterway:river")
+plochingen = engine.query(""" #"Plochingen" """)
+
+# lets find our region
+idOfPlochingen = 0
+
+class FindPlochingenVisitor(pyoscar._pyoscar._GeoHierarchySubSetNodeVisitor):
+	def __init__(self):
+		pyoscar._pyoscar._GeoHierarchySubSetNodeVisitor.__init__(self, self)
+		self.idOfPlochingen = -1
+	def visit(self, node):
+		itemId = graph.graphId2ItemId(node.graphId())
+		item = store.at(itemId)
+		if (item.hasKey("name") and item.value("name") == "Plochingen"):
+			self.idOfPlochingen = itemId
+
+visitor = FindPlochingenVisitor()
+plochingen.graph().visit(visitor)
+
+print("Plochingen is " + str(store.at(visitor.idOfPlochingen)))
+
+if (visitor.idOfPlochingen != -1):
+	neckar_fils_intersections = set()
+	relhelp.intersecting_items(
+		neckar,
+		fils,
+		pyoscar.RelationHelpersIntersectingItemsVisitor(
+			lambda x, y : neckar_fils_intersections.update(set([x, y]))
+		))
+	print("The following neckar and fils parts intersect: " + str(neckar_fils_intersections))
+	print("The osm ids of the intersecting parts are: " + str([store.at(itemId).osmId() for itemId in neckar_fils_intersections]))
+	partsInPlochingen = [itemId for itemId in neckar_fils_intersections if relhelp.is_in(visitor.idOfPlochingen, itemId)]
+	for itemId in partsInPlochingen:
+		item = store.at(itemId)
+		print("Item with id=" + str(itemId) + " and osmId=" + str(item.osmId()) + " is in Plochingen")
+else:
+	print("Did not find plochingen")
+

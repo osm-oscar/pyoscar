@@ -88,7 +88,7 @@ private:
 };
 
 namespace {
-void RelationHelpers_intersecting_items(
+void RelationHelpers_intersecting_items_CellQueryResult(
 	const RelationHelpers & self,
 	const sserialize::CellQueryResult & first,
 	const sserialize::CellQueryResult & second,
@@ -96,7 +96,17 @@ void RelationHelpers_intersecting_items(
 {
 	self.intersecting_items(first, second, visitor);
 }
+
+void RelationHelpers_intersecting_items_SubSet(
+	const RelationHelpers & self,
+	const sserialize::Static::spatial::GeoHierarchy::SubSet & first,
+	const sserialize::Static::spatial::GeoHierarchy::SubSet & second,
+	RelationHelpersIntersectingItemsVisitor visitor)
+{
+	self.intersecting_items(first, second, visitor);
 }
+
+} //protecting namespace
 
 void export_pyoscar_RelationHelpers() {
 	using namespace boost::python;
@@ -118,7 +128,8 @@ void export_pyoscar_RelationHelpers() {
 		.def("intersect", intersect_ids, "true if first and second intersect")
 		.def("is_in", is_in_items, "true iff first covers second")
 		.def("intersect", intersect_items, "true if first and second intersect")
-		.def("intersect", &RelationHelpers_intersecting_items, "visit all items intersecting each other")
+		.def("intersecting_items", &RelationHelpers_intersecting_items_CellQueryResult, "Visit all items intersecting each other")
+		.def("intersecting_items", &RelationHelpers_intersecting_items_SubSet, "Visit all items intersecting each other")
 	;
 }
 

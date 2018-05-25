@@ -26,6 +26,10 @@ RelationHelpers MainHandler::relationHelpers() {
 	return RelationHelpers(m_cmp.store(), m_cmp.indexStore());
 }
 
+CellManipulation MainHandler::cellManipulator() {
+	return CellManipulation(m_cmp.store(), m_cmp.indexStore());
+}
+
 namespace exporting {
 
 void export_pyoscar_MainHandler() {
@@ -34,6 +38,7 @@ void export_pyoscar_MainHandler() {
 		.def("energize", &pyoscar::MainHandler::energize, "Load data store at path p")
 		.def("engine", &pyoscar::MainHandler::engine, return_internal_reference<>(), "Get query engine")
 		.def("relationHelpers", &pyoscar::MainHandler::relationHelpers, "Get relation helpers")
+		.def("cellManipulator", &pyoscar::MainHandler::cellManipulator, "Get cell manipulator")
 	;
 }
 

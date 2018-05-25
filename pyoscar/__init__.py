@@ -5,10 +5,12 @@ from ._pyoscar import *
 class GeoHierarchySubSetNodeVisitor(_pyoscar._GeoHierarchySubSetNodeVisitor):
 	def __init__(self, visitor):
 		_pyoscar._GeoHierarchySubSetNodeVisitor.__init__(self, self)
-		self.m_visitor = visitor
+		if (not visitor is None):
+			self.m_visitor = visitor
 
 	def visit(self, x):
-		self.m_visitor(x)
+		if (not self.m_visitor is None):
+			self.m_visitor(x)
 
 class RelationHelpersIntersectingItemsVisitor(_pyoscar._RelationHelpersIntersectingItemsVisitor):
 	def __init__(self, visitor):

@@ -2,7 +2,7 @@
 
 #include <liboscar/OsmKeyValueObjectStore.h>
 #include <sserialize/Static/ItemIndexStore.h>
-#include <sserialize/spatial/CellQueryResult.h>
+#include <sserialize/Static/GeoHierarchy.h>
 #include <sserialize/utility/assert.h>
 #include <sserialize/algorithm/hashspecializations.h>
 
@@ -20,6 +20,11 @@ public:
 	
 	template<typename TVisitor>
 	void intersecting_items(const sserialize::CellQueryResult & first, const sserialize::CellQueryResult & second, TVisitor visitor) const;
+	
+	template<typename TVisitor>
+	void intersecting_items(const sserialize::Static::spatial::GeoHierarchy::SubSet & first, const sserialize::Static::spatial::GeoHierarchy::SubSet & second, TVisitor visitor) const {
+		intersecting_items(first.cqr(), second.cqr(), visitor);
+	}
 private:
 	liboscar::Static::OsmKeyValueObjectStore m_store;
 	sserialize::Static::ItemIndexStore m_idxStore;

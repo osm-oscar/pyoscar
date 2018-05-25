@@ -23,6 +23,10 @@ uint32_t findValue_item(const liboscar::Static::OsmKeyValueObjectStoreItem & ite
 	return item.findValue(value);
 }
 
+uint32_t hasKey_item(const liboscar::Static::OsmKeyValueObjectStoreItem & item, const std::string & key) {
+	return item.findKey(key) < item.npos;
+}
+
 sserialize::spatial::GeoRect boundary_item(const liboscar::Static::OsmKeyValueObjectStoreItem & item) {
 	return item.geoShape().boundary();
 }
@@ -52,6 +56,7 @@ void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
 		.def("value", valueByKey, "Return value by key, empty if not present")
 		.def("findKey", &findKey_item, "Return index of key, 0xFFFFFFFF if not present")
 		.def("findValue", &findValue_item, "Return index of value, 0xFFFFFFFF if not present")
+		.def("hasKey", &hasKey_item, "true iff item has the specified key")
 	;
 }
 

@@ -37,7 +37,9 @@ sserialize_Static_spatial_GeoHierarchy_SubSetNodeVisit(
 	const sserialize::Static::spatial::detail::SubSet::Node::NodePtr & self,
 	SubSetNodeVisitor visitor)
 {
-	sserialize_Static_spatial_GeoHierarchy_SubSetNodeVisitImp(self, visitor);
+	for(const auto & x : *self) {
+		sserialize_Static_spatial_GeoHierarchy_SubSetNodeVisitImp(x, visitor);
+	}
 }
 
 std::string
@@ -83,13 +85,22 @@ void export_sserialize_Static_spatial_GeoHierarchy_SubSetNode() {
 // 	register_ptr_to_python< MyClass::NodePtr >();
 }
 
+namespace {
+
+sserialize::ItemIndex sserialize_Static_spatial_GeoHierarchy_SubSet(const sserialize::Static::spatial::detail::SubSet & x) {
+	return x.cqr().flaten();
+}
+
+} //protecting namespace
+
 void export_sserialize_Static_spatial_GeoHierarchy_SubSet() {
 	using namespace boost::python;
 	using MyClass = sserialize::Static::spatial::detail::SubSet;
 	class_<MyClass>("GeoHierarchySubSet")
 		.def("cells", &MyClass::cqr, return_value_policy<copy_const_reference>(), "Cells of the query")
 		.def("graph", &MyClass::root, return_value_policy<copy_const_reference>(), "The Inclusion-Dag of the query")
-		.def("items", &MyClass::items, "All items of the query")
+		.def("items", &MyClass::items, "All items in the specified region")
+		.def("items", &sserialize_Static_spatial_GeoHierarchy_SubSet, "All items of the query")
 	;
 }
 
