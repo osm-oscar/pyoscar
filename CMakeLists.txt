@@ -3,11 +3,28 @@ project(pyoscar)
 
 
 #todo make this working with other python versions
-set(Python_ADDITIONAL_VERSIONS 3.5)
+set(Python_ADDITIONAL_VERSIONS 3.5 3.6 3.7)
 
 find_package(PythonInterp 3.5 REQUIRED)
 find_package(PythonLibs 3.5 REQUIRED)
-find_package(Boost COMPONENTS python-py35 REQUIRED)
+
+find_package(Boost COMPONENTS python3 QUIET)
+
+if (NOT ${Boost_PYTHON3_FOUND})
+	find_package(Boost COMPONENTS python-py35 QUIET)
+endif()
+
+if (NOT ${Boost_PYTHON-PY35_FOUND})
+	find_package(Boost COMPONENTS python-py36 QUIET)
+endif()
+
+if (NOT ${Boost_PYTHON-PY36_FOUND})
+	find_package(Boost COMPONENTS python-py37 QUIET)
+endif()
+
+if (NOT ${Boost_PYTHON-PY35_FOUND})
+	message(FATAL_ERROR "Could not find any suitable boost python version")
+endif()
 
 add_subdirectory(vendor/liboscar liboscar)
 
