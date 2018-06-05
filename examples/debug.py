@@ -124,3 +124,37 @@ if (visitor.idOfPlochingen != -1):
 else:
 	print("Did not find plochingen")
 
+#Lets try this one: "The post office is at a train station in Bamberg."
+#For this we first need the correct Bamberg,
+# then all train stations in that Bamberg,
+# then all post offices near these train stations
+
+bamberg_query = engine.query(""" #"Bamberg" """)
+
+class FindBambergVisitor(pyoscar.GeoHierarchySubSetNodeVisitorBase):
+	def __init__(self):
+		pyoscar.GeoHierarchySubSetNodeVisitorBase.__init__(self, self)
+		self.candidates = set()
+	def visit(self, node):
+		itemId = graph.graphId2ItemId(node.graphId())
+		item = store.at(itemId)
+		if (item.hasKey("name") and item.value("name") == "Bamberg" and int(item.value("admin_level")) == 6):
+			self.candidates.add(itemId)
+
+bamberg_candidates = FindBambergVisitor()
+bamberg_query.graph().visit(bamberg_candidates)
+
+#now check for each candidate the train stations and post offices
+for itemId in bamberg_candidates.candidates:
+	trainstations_qstr = "$region:" + str(itemId) + " @amenity:train_station"
+	postoffices_qstr = "$region:" + str(itemId) + " @amenity:post_office"
+	postoffices_near_trainstrations = "%1%%(" + trainstations_qstr + ")" + " (" + postoffices_qstr + ")"
+
+	trainstations = engine.query(trainstations_qstr)
+	postoffices = engine.query(postoffices_near_trainstrations)
+
+	#we can now check 
+	
+
+
+
