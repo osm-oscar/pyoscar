@@ -11,6 +11,8 @@ git --rebase pull && git submodule update && git submodule foreach --recursive g
 ```
 
 ## Pre-requisites
+Remember to install the development files well. On Debian the relevant packages usually have a "dev" suffix.
+
  - Python 3
  - Boost-Python
  - zlib-dev
