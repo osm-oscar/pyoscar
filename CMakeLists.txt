@@ -8,21 +8,18 @@ set(Python_ADDITIONAL_VERSIONS 3.5 3.6 3.7)
 find_package(PythonInterp 3.5 REQUIRED)
 find_package(PythonLibs 3.5 REQUIRED)
 
-find_package(Boost COMPONENTS python3 QUIET)
+find_package(Boost COMPONENTS python3 python-py35 python-py36 python-py37)
 
-if (NOT ${Boost_PYTHON3_FOUND})
-	find_package(Boost COMPONENTS python-py35 QUIET)
-endif()
-
-if (NOT ${Boost_PYTHON-PY35_FOUND})
-	find_package(Boost COMPONENTS python-py36 QUIET)
-endif()
-
-if (NOT ${Boost_PYTHON-PY36_FOUND})
-	find_package(Boost COMPONENTS python-py37 QUIET)
-endif()
-
-if (NOT ${Boost_PYTHON-PY35_FOUND})
+#todo: check against which python version were linking and use the appropriate boost version
+if (${Boost_PYTHON3_FOUND})
+	set(MY_BOOST_LIBRARIES ${Boost_PYTHON3_LIBRARY})
+elseif (${Boost_PYTHON-PY37_FOUND})
+	set(MY_BOOST_LIBRARIES ${Boost_PYTHON-PY37_LIBRARY})
+elseif (${Boost_PYTHON-PY36_FOUND})
+	set(MY_BOOST_LIBRARIES ${Boost_PYTHON-PY36_LIBRARY})
+elseif (${Boost_PYTHON-PY35_FOUND})
+	set(MY_BOOST_LIBRARIES ${Boost_PYTHON-PY35_LIBRARY})
+else()
 	message(FATAL_ERROR "Could not find any suitable boost python version")
 endif()
 
@@ -65,11 +62,10 @@ set(SOURCES_H
 )
 
 set(MY_LINK_LIBRARIES
-	${Boost_LIBRARIES}
+	${MY_BOOST_LIBRARIES}
 	${PYTHON_LIBRARIES}
-	${Boost_LIBRARIES}
 	${LIBOSCAR_LINK_LIBRARIES}
-	${Boost_LIBRARIES}
+	${MY_BOOST_LIBRARIES}
 )
 
 PYTHON_ADD_MODULE(${PROJECT_NAME} ${SOURCES_CPP} ${SOURCES_H})
