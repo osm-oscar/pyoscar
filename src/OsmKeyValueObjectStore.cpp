@@ -2,6 +2,8 @@
 
 #include <liboscar/OsmKeyValueObjectStore.h>
 
+#include <sserialize/spatial/DistanceCalculator.h>
+
 #include <boost/python.hpp>
 
 namespace pyoscar {
@@ -31,6 +33,11 @@ sserialize::spatial::GeoRect boundary_item(const liboscar::Static::OsmKeyValueOb
 	return item.geoShape().boundary();
 }
 
+double distance_item(const liboscar::Static::OsmKeyValueObjectStoreItem & item, const liboscar::Static::OsmKeyValueObjectStoreItem & other) {
+	sserialize::spatial::DistanceCalculator dc( sserialize::spatial::DistanceCalculator::DCT_GEODESIC_FAST );
+	return item.geoShape().get()->distance(*(other.geoShape().get()), dc);
+}
+
 }//end protecting namespace
 
 void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
@@ -57,6 +64,7 @@ void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
 		.def("findKey", &findKey_item, "Return index of key, 0xFFFFFFFF if not present")
 		.def("findValue", &findValue_item, "Return index of value, 0xFFFFFFFF if not present")
 		.def("hasKey", &hasKey_item, "true iff item has the specified key")
+		.def("distance", &distance_item, "Approximate distance to the given item in meters")
 	;
 }
 
