@@ -124,36 +124,55 @@ if (visitor.idOfPlochingen != -1):
 else:
 	print("Did not find plochingen")
 
-#Lets try this one: "The post office is at a train station in Bamberg."
-#For this we first need the correct Bamberg,
-# then all train stations in that Bamberg,
+#Lets try this one: "The post office is at a train station in <CITY>."
+#For this we first need the correct Fränkische Kunststoff,
+# then all train stations in that Fränkische Kunststoff,
 # then all post offices near these train stations
 
-bamberg_query = engine.query(""" #"Bamberg" """)
+city_name = "Bad Cannstatt"
 
-class FindBambergVisitor(pyoscar.GeoHierarchySubSetNodeVisitorBase):
+print("Try to find postoffices at trainstations near {0}".format(city_name))
+
+city_query = engine.query(""" #"{0}" """.format(city_name))
+
+class FindCityVisitor(pyoscar.GeoHierarchySubSetNodeVisitorBase):
 	def __init__(self):
 		pyoscar.GeoHierarchySubSetNodeVisitorBase.__init__(self, self)
 		self.candidates = set()
 	def visit(self, node):
 		itemId = graph.graphId2ItemId(node.graphId())
 		item = store.at(itemId)
-		if (item.hasKey("name") and item.value("name") == "Bamberg" and int(item.value("admin_level")) == 6):
+		if (item.hasKey("name") and item.value("name") == city_name and item.hasKey("admin_level")  and int(item.value("admin_level")) >= 6):
 			self.candidates.add(itemId)
 
-bamberg_candidates = FindBambergVisitor()
-bamberg_query.graph().visit(bamberg_candidates)
+city_candidates = FindCityVisitor()
+city_query.graph().visit(city_candidates)
+
+print("City candidates: {0}".format(city_candidates.candidates))
 
 #now check for each candidate the train stations and post offices
-for itemId in bamberg_candidates.candidates:
-	trainstations_qstr = "$region:" + str(itemId) + " @amenity:train_station"
+for itemId in city_candidates.candidates:
+	trainstations_qstr = "$region:" + str(itemId) + " @railway:station"
 	postoffices_qstr = "$region:" + str(itemId) + " @amenity:post_office"
-	postoffices_near_trainstrations = "%1%%(" + trainstations_qstr + ")" + " (" + postoffices_qstr + ")"
+	postoffices_near_trainstrations = "%2%%(" + trainstations_qstr + ")" + " (" + postoffices_qstr + ")"
 
 	trainstations = engine.query(trainstations_qstr)
 	postoffices = engine.query(postoffices_near_trainstrations)
 
-	#we can now check 
+	print("Number of trainstations in {0}: {1}".format(itemId, trainstations.items().size()))
+	print("Number of postoffices near trainstations in {0}: {1}".format(itemId, postoffices.items().size()))
+
+	#we can now check the distance between the candidate postoffices and trainstations
+	for trainstation in ( store.at(i) for i in trainstations.items() ):
+		for postoffice in ( store.at(i) for i in postoffices.items() ):
+			dist = trainstation.distance(postoffice)
+			# if dist < 100:
+			print("Trainstation {0} and Postoffice {1} are about {2} meters apart".format(
+				trainstation.osmId(),
+				postoffice.osmId(),
+				dist
+			))
+
 	
 
 
