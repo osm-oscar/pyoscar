@@ -125,8 +125,8 @@ else:
 	print("Did not find plochingen")
 
 #Lets try this one: "The post office is at a train station in <CITY>."
-#For this we first need the correct Fränkische Kunststoff,
-# then all train stations in that Fränkische Kunststoff,
+#For this we first need the correct city,
+# then all train stations in that city,
 # then all post offices near these train stations
 
 city_name = "Bad Cannstatt"
@@ -152,7 +152,7 @@ print("City candidates: {0}".format(city_candidates.candidates))
 
 #now check for each candidate the train stations and post offices
 for itemId in city_candidates.candidates:
-	trainstations_qstr = "$region:" + str(itemId) + " @railway:station"
+	trainstations_qstr = "$region:{0} @railway:station".format(itemId)
 	postoffices_qstr = "$region:" + str(itemId) + " @amenity:post_office"
 	postoffices_near_trainstrations = "%2%%(" + trainstations_qstr + ")" + " (" + postoffices_qstr + ")"
 
