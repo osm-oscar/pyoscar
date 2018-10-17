@@ -9,6 +9,7 @@ git clone --recursive https://github.com/dbahrdt/pyoscar
 ```Bash
 git --rebase pull && git submodule update && git submodule foreach --recursive git submodule update
 ```
+Don't forget to rebuild the library
 
 ## Pre-requisites
 Remember to install the development files well. On Debian the relevant packages usually have a "dev" suffix.
