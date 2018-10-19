@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sserialize/utility/refcounting.h>
+#include <memory>
 
 namespace sserialize {
 
@@ -12,6 +13,15 @@ get_pointer(const sserialize::RCPtrWrapper<T> & p) {
 	
 } //end namespace sserialize
 
+namespace std {
+
+template<typename T>
+T *
+get_pointer(const std::shared_ptr<T> & p) {
+  return const_cast<T*>(p.get());
+}
+
+} //end namespace std
 
 // namespace boost {
 // 
@@ -30,6 +40,11 @@ namespace python {
 
 template <typename T>
 struct pointee< sserialize::RCPtrWrapper<T> > {
+	typedef T type;
+};
+
+template <typename T>
+struct pointee< std::shared_ptr<T> > {
 	typedef T type;
 };
 

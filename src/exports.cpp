@@ -8,6 +8,7 @@
 #include <pyoscar/StaticOsmCompleter.h>
 #include <pyoscar/CellManipulation.h>
 #include <pyoscar/GeoRect.h>
+#include <pyoscar/GeoShape.h>
 
 BOOST_PYTHON_MODULE(_pyoscar)
 {
@@ -17,6 +18,7 @@ BOOST_PYTHON_MODULE(_pyoscar)
 	export_sserialize_ItemIndex();
 
 	export_sserialize_spatial_GeoRect();
+	export_sserialize_Static_spatial_GeoShapes();
 
 	export_sserialize_Static_ItemIndexStore();
 

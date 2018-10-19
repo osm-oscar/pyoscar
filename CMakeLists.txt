@@ -43,6 +43,7 @@ set(SOURCES_CPP
 	src/GeoHierarchy.cpp
 	src/refcounting.cpp
 	src/CellManipulation.cpp
+	src/GeoShape.cpp
 	src/GeoRect.cpp
 	src/exports.cpp
 )
@@ -59,6 +60,7 @@ set(SOURCES_H
 	include/pyoscar/refcounting.h
 	include/pyoscar/CellManipulation.h
 	include/pyoscar/GeoRect.h
+	include/pyoscar/GeoShape.h
 )
 
 set(MY_LINK_LIBRARIES
