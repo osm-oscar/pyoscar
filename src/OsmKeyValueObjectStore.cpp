@@ -65,6 +65,7 @@ void export_liboscar_Static_OsmKeyValueObjectStoreItem() {
 		.def("findValue", &findValue_item, "Return index of value, 0xFFFFFFFF if not present")
 		.def("hasKey", &hasKey_item, "true iff item has the specified key")
 		.def("distance", &distance_item, "Approximate distance to the given item in meters")
+		.def("shape", &MyClass::geoShape, "Spatial data associated with the item")
 	;
 }
 
