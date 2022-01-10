@@ -13,7 +13,7 @@ CellManipulation::~CellManipulation() {}
 
 sserialize::CellQueryResult
 CellManipulation::dilate(const sserialize::CellQueryResult & cqr, double distance) {
-	return sserialize::CellQueryResult(m_dilator.dilate(cqr, distance*1000, 1), cqr.geoHierarchy(), cqr.idxStore(), cqr.flags() & cqr.FF_MASK_CELL_ITEM_IDS) + cqr;
+	return sserialize::CellQueryResult(m_dilator.dilate(cqr, distance*1000, 1), cqr.cellInfo(), cqr.idxStore(), cqr.flags() & cqr.FF_MASK_CELL_ITEM_IDS) + cqr;
 }
 
 
